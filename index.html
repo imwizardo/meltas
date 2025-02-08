@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MELTAS Anti-Scam Group - Глобальная база по сливу мошенников и борьба со скамом.">
+  <meta name="keywords" content="scam, anti-scam, MARVEL, бот, безопасность, Telegram">
+  <title>MELTAS Anti-Scam Group</title>
+  <!-- Preconnect для шрифтов -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Подключаем шрифт Montserrat -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #0000ff;  /* красный Marvel */
+      --secondary-color: #00008b;  /* темно-красный */
+      --dark-bg: #000;           /* черный фон */
+      --medium-bg: #222;         /* темно-серый (серый) */
+      --light-bg: #121212;       /* почти черный фон */
+      --text-color: #fff;        /* белый текст */
+      --nav-bg: rgba(0, 0, 0, 0.9);
+    }
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--light-bg);
+      color: var(--text-color);
+      line-height: 1.6;
+      transition: background-color 1s ease; /* плавный переход фона */
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    /* Навигация */
+    nav {
+      background: var(--nav-bg);
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+    }
+    nav ul li {
+      margin: 10px 20px;
+    }
+    nav ul li a {
+      color: var(--text-color);
+      font-weight: 500;
+      transition: color 0.5s ease; /* плавный переход цвета */
+    }
+    nav ul li a:hover {
+      color: var(--primary-color);
+    }
+    /* Хедер */
+    header {
+      background: linear-gradient(135deg, var(--dark-bg), var(--primary-color));
+      color: var(--text-color);
+      padding: 100px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      margin-top: 60px; /* чтобы не перекрывал навигацию */
+    }
+    header h1 {
+      font-size: 3em;
+      margin-bottom: 20px;
+      animation: fadeInDown 1s ease-out;
+      position: relative;
+      z-index: 2;
+    }
+    header p {
+      font-size: 1.2em;
+      margin-bottom: 30px;
+      animation: fadeInUp 1s ease-out 0.5s forwards;
+      opacity: 0;
+      position: relative;
+      z-index: 2;
+    }
+    .text-3d {
+      font-size: 1.5em;
+      margin-top: 20px;
+      color: var(--primary-color);
+      animation: text3D 1.5s ease-out forwards;
+      position: relative;
+      z-index: 2;
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 30px;
+      background: var(--primary-color);
+      color: var(--text-color);
+      border-radius: 30px;
+      font-weight: bold;
+      transition: background 0.3s;
+      margin-top: 20px;
+      position: relative;
+      z-index: 2;
+    }
+    .btn:hover {
+      background: var(--secondary-color);
+    }
+    /* Секции */
+    main { }
+    section {
+      padding: 80px 20px;
+      /* теперь фон каждой секции определяется через data-bgcolor,
+         а сами секции прозрачны, чтобы видеть общий фон <body> */
+      background: transparent;
+    }
+    .section-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    h2 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      animation: fadeIn 1s ease-out;
+    }
+    .fade-in {
+      opacity: 0;
+      animation: fadeIn 1s forwards;
+    }
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes text3D {
+      0% {
+        opacity: 0;
+        transform: perspective(800px) rotateY(45deg) scale(0.5);
+      }
+      100% {
+        opacity: 1;
+        transform: perspective(800px) rotateY(0deg) scale(1);
+      }
+    }
+    /* Карточки */
+    .features, .commands, .team {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      margin-top: 40px;
+    }
+    .feature, .command, .team-member {
+      background: var(--medium-bg);
+      border-radius: 10px;
+      padding: 20px;
+      width: 300px;
+      margin: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+      transform-style: preserve-3d;
+    }
+    .feature:hover, .command:hover, .team-member:hover {
+      transform: perspective(1000px) rotateY(5deg) rotateX(5deg);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+    }
+    .feature h3, .command h4, .team-member h4 {
+      margin-bottom: 10px;
+    }
+    pre.code-snippet {
+      background: #272822;
+      color: #f8f8f2;
+      padding: 20px;
+      border-radius: 5px;
+      overflow-x: auto;
+      font-size: 0.9em;
+      max-height: 400px;
+      text-align: left;
+      margin-top: 20px;
+    }
+    /* Секция "Наша команда" */
+    .team-member img {
+      width: 150px;
+      height: 150px;
+      border-radius: 10px;
+      object-fit: cover;
+      margin-bottom: 15px;
+    }
+    /* Секция игры "Snake" */
+    #game {
+      padding: 40px 20px;
+    }
+    #snakeCanvas {
+      background: var(--dark-bg);
+      display: block;
+      margin: 0 auto;
+      border: 2px solid var(--primary-color);
+      border-radius: 10px;
+    }
+    .game-controls {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+    .game-controls button {
+      background: var(--primary-color);
+      border: none;
+      color: var(--text-color);
+      font-size: 1.5em;
+      margin: 5px;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .game-controls button:hover {
+      background: var(--secondary-color);
+    }
+    /* Footer */
+    footer {
+      background: var(--dark-bg);
+      color: var(--text-color);
+      text-align: center;
+      padding: 20px;
+    }
+    footer a {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+    /* Responsive */
+    @media (max-width: 768px) {
+      .features, .commands, .team {
+        flex-direction: column;
+        align-items: center;
+      }
+      header h1 {
+        font-size: 2.5em;
+      }
+      #snakeCanvas {
+        width: 90%;
+        height: auto;
+      }
+      .game-controls button {
+        font-size: 1.2em;
+        padding: 8px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Навигация -->
+  <nav aria-label="Главное меню">
+    <ul>
+      <li><a href="#home">Главная</a></li>
+      <li><a href="#about">О нас</a></li>
+      <li><a href="#features">Функции</a></li>
+      <li><a href="#bot">Бот</a></li>
+      <li><a href="#team">Команда</a></li>
+      <li><a href="#contact">Контакты</a></li>
+      <li><a href="#game">Игра</a></li>
+    </ul>
+  </nav>
+
+  <!-- Хедер -->
+  <header id="home" data-bgcolor="#121212">
+    <h1>MELTAS Anti-Scam Group</h1>
+    <p>Глобальная база по сливу мошенников – боремся со скамом вместе!</p>
+    <div class="text-3d">Добро пожаловать в мир MELTAS!</div>
+    <a href="https://t.me/MelTasReport" target="_blank" class="btn">Присоединиться в Telegram</a>
+  </header>
+
+  <main>
+    <!-- Секция "О нас" -->
+    <section id="about" data-bgcolor="#121212">
+      <div class="section-content">
+        <h2>О нас</h2>
+        <p class="fade-in" style="max-width:800px; margin:20px auto;">
+          Мы — команда экспертов, объединённых идеей создать надёжную базу данных мошенников. Наш бот отслеживает подозрительную активность, проверяет репутацию пользователей и помогает оперативно реагировать на случаи скама. С нами вы всегда в курсе последних новостей и можете быть уверены в безопасности сделок.
+        </p>
+      </div>
+    </section>
+
+    <!-- Секция "Функции бота" -->
+    <section id="features" data-bgcolor="#222">
+      <div class="section-content">
+        <h2>Функции бота</h2>
+        <div class="features">
+          <div class="feature fade-in">
+            <h3>Проверка репутации</h3>
+            <p>Команда <code>/чек</code> позволяет мгновенно узнать репутацию пользователя и получить полную статистику (слито скамеров, предупреждения и т.д.).</p>
+          </div>
+          <div class="feature fade-in">
+            <h3>Добавление скамеров</h3>
+            <p>С помощью команды <code>/скам</code> можно оперативно добавить мошенника в базу с подробным описанием и ссылками на доказательства.</p>
+          </div>
+          <div class="feature fade-in">
+            <h3>Модерация и уведомления</h3>
+            <p>Бот автоматически рассылает напоминания, генерирует отчёты и предоставляет инструменты модерации (бан, мут, апелляция и т.д.).</p>
+          </div>
+          <div class="feature fade-in">
+            <h3>Премиум-функции</h3>
+            <p>Пользователи с премиум-статусом получают расширенные возможности: смена темы, кастомное фото, увеличение лимитов проверок и многое другое.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Секция "Бот" -->
+    <section id="bot" data-bgcolor="#121212">
+      <div class="section-content">
+        <h2>Бот MELTAS</h2>
+        <p class="fade-in" style="max-width:800px; margin:20px auto;">
+          Наш бот разработан на Python с использованием asyncio, aiohttp, aiosqlite и Pyrogram. Он интегрируется с Telegram и реализует множество функций: от проверки репутации до автоматической модерации и рассылок. Бот поддерживает команды для пользователей, модераторов и владельцев, что позволяет оперативно реагировать на случаи скама.
+        </p>
+        <h3 style="margin-top:40px;">Ключевые команды</h3>
+        <div class="commands">
+          <div class="command fade-in">
+            <h4>/start</h4>
+            <p>Запуск бота в личных сообщениях.</p>
+          </div>
+          <div class="command fade-in">
+            <h4>/чек</h4>
+            <p>Быстрая проверка репутации по ID или @username.</p>
+          </div>
+          <div class="command fade-in">
+            <h4>/скам</h4>
+            <p>Добавление мошенника в базу с подробным описанием и ссылками на пруфы.</p>
+          </div>
+          <div class="command fade-in">
+            <h4>/admin, /гарант, /президент</h4>
+            <p>Команды для назначения ролей и модерации пользователей.</p>
+          </div>
+          <div class="command fade-in">
+            <h4>/tips, /simulate</h4>
+            <p>Советы по безопасности и симулятор безопасных сделок.</p>
+          </div>
+        </div>
+        <h3 style="margin-top:40px;">Пример кода</h3>
+        <pre class="code-snippet fade-in">
+import asyncio
+from pyrogram import Client, filters
+import aiosqlite
+
+async def main():
+    # Инициализация базы данных
+    db = await aiosqlite.connect("bot_data.db")
+    # Создание и настройка клиента бота
+    app = Client("my_bot", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
+    
+    @app.on_message(filters.command("start"))
+    async def start(client, message):
+        await message.reply("Привет! Я MELTAS бот для борьбы со скамом.")
+    
+    # Запуск бота
+    await app.start()
+    await idle()
+    await app.stop()
+    await db.close()
+
+if __name__ == "__main__":
+    asyncio.run(main())
+        </pre>
+        <h3 style="margin-top:40px;">Дополнительная информация о боте</h3>
+        <p class="fade-in" style="max-width:800px; margin:20px auto;">
+          Наш бот – это многофункциональный инструмент, который позволяет:
+        </p>
+        <ul class="fade-in" style="list-style:disc; margin:20px auto; max-width:800px; text-align:left;">
+          <li>Отслеживать и регистрировать мошенническую активность в режиме реального времени.</li>
+          <li>Обеспечивать оперативную модерацию групп: выдача мутов, банов, автоматическая рассылка предупреждений и уведомлений.</li>
+          <li>Проводить ежедневные и всеобщие отчёты по сливу скамеров, что помогает выявлять самых активных участников.</li>
+          <li>Интегрировать внешние сервисы, например, TikTokApi для получения трендовых видео.</li>
+          <li>Обрабатывать inline-запросы для мгновенной проверки репутации пользователей.</li>
+          <li>Предоставлять расширенные возможности для премиум-пользователей: кастомизация профиля, смена темы, увеличение лимитов проверок.</li>
+          <li>Поддерживать функционал для управления ролями: администраторы, гаранты, президенты, директора и стажёры.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Секция "Наша команда" -->
+    <section id="team" data-bgcolor="#222">
+      <div class="section-content">
+        <h2>Наша команда</h2>
+        <div class="team">
+          <div class="team-member fade-in">
+            <!-- Используем прямую ссылку на изображение создателя -->
+            <img src="https://img2.teletype.in/files/10/1e/101ef8b6-f3d1-4565-848e-7c9619d18056.jpeg" alt="Создатель" loading="lazy">
+            <h4>@BaconsTopRLLY</h4>
+            <p>Создатель группы, стратег и организатор, отвечающий за развитие проекта.</p>
+          </div>
+          <div class="team-member fade-in">
+            <!-- Используем прямую ссылку на изображение кодера бота -->
+            <img src="https://img4.teletype.in/files/70/87/7087f3ef-a1b6-474c-8eb7-6d98e7819389.jpeg" alt="Кодер бота" loading="lazy">
+            <h4>@thelemonking</h4>
+            <p>Главный разработчик бота, реализующий всю логику и функционал.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Секция "Контакты" -->
+    <section id="contact" data-bgcolor="#000">
+      <div class="section-content">
+        <h2>Контакты</h2>
+        <p class="fade-in" style="max-width:600px; margin:20px auto;">
+          Если у вас возникли вопросы или предложения – пишите нам в Telegram или воспользуйтесь формой обратной связи.
+        </p>
+        <a href="https://t.me/BaconsTopRLLY" target="_blank" class="btn fade-in">Связаться с создателем</a>
+      </div>
+    </section>
+
+    <!-- Секция "Игра: Snake" -->
+    <section id="game" data-bgcolor="#222">
+      <div class="section-content">
+        <h2>Игра: Snake</h2>
+        <canvas id="snakeCanvas" width="400" height="400"></canvas>
+        <div class="game-controls">
+          <button onclick="setDirection(0, -1)">&#8593;</button>
+          <button onclick="setDirection(-1, 0)">&#8592;</button>
+          <button onclick="setDirection(1, 0)">&#8594;</button>
+          <button onclick="setDirection(0, 1)">&#8595;</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Подвал -->
+  <footer>
+    <p>© 2025 MELTAS Anti-Scam Group. Все права защищены.</p>
+    <p>Создатель: <a href="https://t.me/BaconsTopRLLY" target="_blank">@BaconsTopRLLY</a> | Кодер бота: <a href="https://t.me/thelemonking" target="_blank">@thelemonking</a></p>
+  </footer>
+
+  <!-- Скрипт для плавной смены фонового цвета по мере прокрутки -->
+  <script>
+    // Получаем все секции, у которых есть data-bgcolor
+    const sections = document.querySelectorAll('section, header');
+    const options = {
+      threshold: 0.6 // когда 60% секции видно – считаем её активной
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Обновляем фоновый цвет body согласно data-bgcolor активной секции
+          const newColor = entry.target.getAttribute('data-bgcolor');
+          if(newColor) {
+            document.body.style.backgroundColor = newColor;
+          }
+        }
+      });
+    }, options);
+
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+  </script>
+
+  <!-- Скрипт для игры Snake -->
+  <script>
+    // Snake Game
+    const canvas = document.getElementById("snakeCanvas");
+    const ctx = canvas.getContext("2d");
+    const grid = 20;
+    const count = canvas.width / grid;
+    let snake = [{x: 10, y: 10}];
+    let snakeLength = 3;
+    let apple = {
+      x: Math.floor(Math.random() * count),
+      y: Math.floor(Math.random() * count)
+    };
+    let dx = 0;
+    let dy = 0;
+    let lastTime = 0;
+    let speed = 5; // обновлений в секунду
+
+    function game(time) {
+      requestAnimationFrame(game);
+      let delta = time - lastTime;
+      if (delta < 1000 / speed) return;
+      lastTime = time;
+      update();
+      draw();
+    }
+
+    function update() {
+      let head = { x: snake[0].x + dx, y: snake[0].y + dy };
+      // Обработка выхода за границы (обёртка)
+      if (head.x < 0) head.x = count - 1;
+      if (head.x >= count) head.x = 0;
+      if (head.y < 0) head.y = count - 1;
+      if (head.y >= count) head.y = 0;
+      snake.unshift(head);
+      if (head.x === apple.x && head.y === apple.y) {
+        snakeLength++;
+        apple.x = Math.floor(Math.random() * count);
+        apple.y = Math.floor(Math.random() * count);
+      }
+      if (snake.length > snakeLength) {
+        snake.pop();
+      }
+      // Проверка столкновения змейки с собой
+      for (let i = 1; i < snake.length; i++) {
+        if (snake[i].x === head.x && snake[i].y === head.y) {
+          // Игра окончена, сброс
+          snake = [{ x: 10, y: 10 }];
+          snakeLength = 3;
+          dx = dy = 0;
+          break;
+        }
+      }
+    }
+
+    function draw() {
+      ctx.fillStyle = "#121212";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      // Рисуем яблоко
+      ctx.fillStyle = "red";
+      ctx.fillRect(apple.x * grid, apple.y * grid, grid - 2, grid - 2);
+      // Рисуем змейку
+      ctx.fillStyle = "lime";
+      snake.forEach(part => {
+        ctx.fillRect(part.x * grid, part.y * grid, grid - 2, grid - 2);
+      });
+    }
+
+    function setDirection(newDx, newDy) {
+      // Предотвращаем смену направления на противоположное
+      if ((newDx === -dx && dx !== 0) || (newDy === -dy && dy !== 0)) return;
+      dx = newDx;
+      dy = newDy;
+    }
+
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "ArrowUp") setDirection(0, -1);
+      else if (e.key === "ArrowDown") setDirection(0, 1);
+      else if (e.key === "ArrowLeft") setDirection(-1, 0);
+      else if (e.key === "ArrowRight") setDirection(1, 0);
+    });
+
+    requestAnimationFrame(game);
+  </script>
+</body>
+</html>
